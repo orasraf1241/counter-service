@@ -22,12 +22,13 @@
         - name: Login to Amazon  ECR
           id: login-ecr
           uses: aws-actions/amazon-ecr-login@v1
-        
+              # Log in to Amazon ECR to enable Docker push
+
         
         - name: Automatic Tagging of Releases
           id: increment-git-tag
-          run: |
-            bash ./build/git_update.sh -v major
+          run: |  # Increment the Git tag for the release (major, minor, patch) current the defualt is MINOR 
+            bash ./build/git_update.sh -v ${{ vars.VERSION_INCREMENT }} 
             
         - name: Build, Tag, and Push the Image to Amazon ECR
           id: build-image
@@ -36,5 +37,9 @@
             ECR_REPOSITORY: ${{ vars.ECR_REPOSITORY }} # Use the ECR repository from the repository variable
             IMAGE_TAG: ${{ steps.increment-git-tag.outputs.git-tag }}
           run: |
+            # Build the Docker image
+            echo "Building the Docker image..."
             docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
+            # Push the Docker image to ECR
+            echo "Pushing the Docker image to ECR..."
             docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
