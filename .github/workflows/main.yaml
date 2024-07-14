@@ -28,6 +28,7 @@
         - name: Automatic Tagging of Releases
           id: increment-git-tag
           run: |  # Increment the Git tag for the release (major, minor, patch) current the defualt is MINOR 
+            git fetch --tags
             bash ./build/git_update.sh -v ${{ vars.VERSION_INCREMENT }} 
             
         - name: Build, Tag, and Push the Image to Amazon ECR
