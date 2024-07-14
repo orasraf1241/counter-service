@@ -17,7 +17,7 @@
           with:
             aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}  # Define AWS region from GitHub secret
             aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }} # Define ECR repository from GitHub secret
-            aws-region: ${{ env.AWS_REGION }}   # Define AWS_REGION repository from GitHub variable 
+            aws-region: ${{ vars.AWS_REGION }} # Use the AWS region from the repository variable
     
         - name: Login to Amazon  ECR
           id: login-ecr
@@ -33,7 +33,7 @@
           id: build-image
           env:
             ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
-            ECR_REPOSITORY: ${{ env.ECR_REPOSITORY }}   # Define ECR_REPOSITORY repository from GitHub variable 
+            ECR_REPOSITORY: ${{ vars.ECR_REPOSITORY }} # Use the ECR repository from the repository variable
             IMAGE_TAG: ${{ steps.increment-git-tag.outputs.git-tag }}
           run: |
             docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
