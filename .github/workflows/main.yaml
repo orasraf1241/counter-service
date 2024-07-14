@@ -4,24 +4,26 @@
       push:
         branches: [ main ]
     jobs:
-      build-and-push:
+      build-and-push: 
         name: Build Test and Push to ECR
         runs-on: ubuntu-latest
         steps:
         - name: Checkout
-          uses: actions/checkout@v2
+          uses: actions/checkout@v2    # Checkout the code from the repository
+
     
         - name: Configure AWS credentials
           uses: aws-actions/configure-aws-credentials@v1
           with:
-            aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-            aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-            aws-region: eu-west-1
+            aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}  # Define AWS region from GitHub secret
+            aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }} # Define ECR repository from GitHub secret
+            aws-region: ${{ env.AWS_REGION }}   # Define AWS_REGION repository from GitHub variable 
     
         - name: Login to Amazon  ECR
           id: login-ecr
           uses: aws-actions/amazon-ecr-login@v1
-    
+        
+        
         - name: Automatic Tagging of Releases
           id: increment-git-tag
           run: |
@@ -31,7 +33,7 @@
           id: build-image
           env:
             ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
-            ECR_REPOSITORY: orasraf/devops-exam-repo
+            ECR_REPOSITORY: ${{ env.ECR_REPOSITORY }}   # Define ECR_REPOSITORY repository from GitHub variable 
             IMAGE_TAG: ${{ steps.increment-git-tag.outputs.git-tag }}
           run: |
             docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
