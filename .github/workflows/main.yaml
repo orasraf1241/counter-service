@@ -59,3 +59,4 @@
             repository: orasraf1241/devops-infra
             event-type: deploy
             client-payload: '{"image_url": "${{ steps.login-ecr.outputs.registry }}/${{ vars.ECR_REPOSITORY }}:${{ steps.increment-git-tag.outputs.git-tag }}"}'
+    

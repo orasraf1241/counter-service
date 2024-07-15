@@ -16,7 +16,7 @@ def index():
         return "Hmm, Plus 1 please "
     else:
         get_counter += 1
-        return f"Our POST counter is:  a {post_counter}, GET counter is: {get_counter}"
+        return f"Our POST counter is: {post_counter}, GET counter is: {get_counter}"
 
 if __name__ == '__main__':
     app.run(debug=True, port=80, host='0.0.0.0')
