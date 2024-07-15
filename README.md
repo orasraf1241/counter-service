@@ -1,5 +1,6 @@
 # Check-Point-DevOps-Exam-
 # create ecr repo 
+
 ```
 aws ecr create-repository \
     --repository-name orasraf/devops-exam-repo \
@@ -8,7 +9,3 @@ aws ecr create-repository \
 ```
 
 
-install albc 
-```
- helm repo add eks https://aws.github.io/eks-charts
- helm install aws-load-balancer-controller eks/aws-load-balancer-controller --set clusterName=orasraf-cluster -n kube-system
