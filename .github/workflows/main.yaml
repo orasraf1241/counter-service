@@ -53,10 +53,10 @@
           # This step prints the Docker image URL after the image has been pushed to ECR
        
         - name: Trigger CD Pipeline
-          uses: peter-evans/repository-dispatch@v1
+          uses: peter-evans/repository-dispatch@v3
           with:
             token: ${{ secrets.PAT_GITHUB_TOKEN }}
             repository: orasraf1241/devops-infra
             event-type: deploy
-            client-payload: '{"image_url": "${{ steps.login-ecr.outputs.registry }}/${{ vars.ECR_REPOSITORY }}:${{ steps.increment-git-tag.outputs.git-tag }}"}'
+            client-payload: '{"image_url": "${{ steps.login-ecr.outputs.registry }}/${{ vars.ECR_REPOSITORY }}:${{ steps.increment-git-tag.outputs.git-tag }}", "ref": "${{ github.ref }}", "sha": "${{ github.sha }}"}'
     
