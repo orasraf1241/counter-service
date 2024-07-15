@@ -44,5 +44,6 @@ The pipeline performs the following steps:
 * * AWS_REGION: The AWS region where your ECR repository is located.
 * * ECR_REPOSITORY: The name of your ECR repository.
 * * VERSION_INCREMENT: The version increment type (major, minor, or patch).
+* * CD_GIT_REPO: The name of your CD repo that will be triggered from this pipeline.
 
 To configure the workflow, you'll need to set the above secrets and variables in your GitHub repository.

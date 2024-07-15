@@ -57,7 +57,7 @@
           uses: peter-evans/repository-dispatch@v3
           with:
             token: ${{ secrets.PAT_GITHUB_TOKEN }}
-            repository: orasraf1241/devops-infra
+            repository: ${{ vars.CD_GIT_REPO }}
             event-type: deploy
             client-payload: '{"image_url": "${{ steps.login-ecr.outputs.registry }}/${{ vars.ECR_REPOSITORY }}:${{ steps.increment-git-tag.outputs.git-tag }}", "ref": "${{ github.ref }}", "sha": "${{ github.sha }}"}'
     
